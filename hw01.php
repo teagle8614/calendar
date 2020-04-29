@@ -11,13 +11,17 @@
     【預計或考慮要修改的部分】
     1.控制面版的日期，要依照選擇的月份立即更動
     2.選擇日期時，標記要跟著動(目前只顯示在當天) ->OK
-    3.可點選行事曆上的日期切換左邊的時間
+    3.可點選行事曆上的日期切換左邊的時間 ->OK
     4.選擇該月份沒有的日期 時間會出現bug(問題1修正應該可以排除)
     5.加上節慶
+    6.RWD
+    7.背景美化
+    8.控制面版CSS修改，選擇select後不會縮回去
    -->
   <?php
-    // 預設值
+  // 變更時區
     date_default_timezone_set('Asia/Taipei');
+    // 預設值
     $today=date("Y-m-d");
     $dToday=date("j");
     $mToday=date("n");
@@ -159,12 +163,21 @@
    .calendarTable tr td:last-child{
     color: <?=$color1;?>;
    }
+   .calendarTable tr td a:hover{
+    background-color: <?=$color2;?>;
+   }
    /* 當天 */
    .calendarTable tr td .today{
     background-color: <?=$color1;?>;
    }
+   .calendarTable tr td .today:hover{
+    background-color: <?=$color1;?>;
+   }
    /* 選擇的日期 */
    .calendarTable tr td .selectDay{
+    background-color: <?=$color2;?>;
+   }
+   .calendarTable tr td .selectDay:hover{
     background-color: <?=$color2;?>;
    }
    /* --------- php-css設定* --------- */
@@ -405,13 +418,16 @@
                     if($num<=$monthDays){
                       // 當天日期
                       if($num==$dToday && $month==$mToday && $year==$yToday){
-                        echo "<span class='today'>".$num."</span>";
+                        // echo "<span class='today'>".$num."</span>";
+                        echo '<a class="today" href="hw01.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
                       }
                       else if($num==$day){
-                        echo "<span class='selectDay'>".$num."</span>";
+                        // echo "<span class='selectDay'>".$num."</span>";
+                        echo '<a class="selectDay" href="hw01.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
                       }
                       else{
-                        echo $num;
+                        // echo $num;
+                        echo '<a href="hw01.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
                       }
                     }
                   }
