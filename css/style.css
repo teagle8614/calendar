@@ -23,6 +23,7 @@ body{
   height: 100%;
   padding-left: 20px;
   padding-bottom: 15px;
+  padding: 20px 0 35px 20px;
   background-color: #fff;
   text-align: center;
   border: 1px solid #ddd;
@@ -74,9 +75,12 @@ body{
 
 .controlBox select{
   width: 60%;
-  height: 30px;
+  height: 40px;
   margin-right: 5px;
   margin-bottom: 15px;
+  padding: 0 5px;
+  font-size: 1.05rem;
+  border: 1px solid #ddd;
 }
 .controlBox input[type=submit],
 .controlBox input[type=reset]{
@@ -123,6 +127,8 @@ body{
   box-shadow: 10px 15px 10px #ccc;
   overflow: hidden;
 }
+
+
 .calendarBox{
   display: flex;
 }
@@ -223,11 +229,11 @@ body{
   width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
 }
 .calendarTable tr td{
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
 }
 .calendarTable tr td:first-child,
 .calendarTable tr td:last-child{
@@ -261,13 +267,8 @@ body{
   color: #fff;
   background-color: #000;
 }
-/* @media screen and (max-width:800px) {
-  .calendarBox{
-    display: block;
-    background-color: aqua;
-  }
-  .calendarBox .rightBox,
-  .calendarBox .leftBox{
-    width: 700px;
-  }
-} */
+
+
+@media screen and (max-width:768px) {
+  
+}

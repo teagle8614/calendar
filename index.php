@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nova+Flat&display=swap" rel="stylesheet">
-  <title>hw01-萬年曆</title>
+  <title>萬年曆</title>
   <link rel="stylesheet" href="css/style.css">
   
   <!-- 
@@ -40,10 +40,7 @@
     $week = func_week($numWeek);
 
 
-    // 抓取日期
-    if(isset($_GET['day'])){
-      $day=$_GET['day'];
-    }
+    
     // 控制月份增減
     if(isset($_GET['month']) && isset($_GET['year'])){
       $month=$_GET['month'];
@@ -65,7 +62,22 @@
         $monthNext=$month+1;
         $mYearPre=$year-1;
       }
+
+
+      // 抓取日期
+      if(isset($_GET['day'])){
+        $day=$_GET['day'];
+
+        //切換月份時防止超出當月日期
+        $monthDays=date("t",strtotime(date("$year-$month")));
+        if($day>$monthDays){
+          $day=$monthDays;
+        }
+      }
+     
     }
+
+
     // 顯示格式
     if(isset($_GET['lang'])){
       $lang=$_GET['lang'];
@@ -211,13 +223,13 @@
         <form action="?">
           <div>
             <select name="year" id="">
-              <!-- 顯示今年前後五十年的年份 -->
+              <!-- 顯示今年前後25年的年份 -->
               <?php
-                $y1=$yToday-50;
+                $y1=$yToday-25;
                 if($y1<=0){
                   $y1=1;
                 }
-                $y2=$yToday+50;
+                $y2=$yToday+25;
 
                 echo "<option value='0' select>請選擇</option>";
                 for($i=$y1;$i<=$y2;$i++){
@@ -270,13 +282,13 @@
         </form>
         
         <div class="btn_group">
-          <a href="hw01.php?day=<?=$dToday;?>&month=<?=$mToday;?>&year=<?=$yToday;?>&lang=<?=$lang;?>">今天日期</a>
+          <a href="index.php?day=<?=$dToday;?>&month=<?=$mToday;?>&year=<?=$yToday;?>&lang=<?=$lang;?>">今天日期</a>
           <?php
             if($lang=="tw"){
-              echo '<a href="hw01.php?day='.$day.'&month='.$month.'&year='.$year.'&lang=en">切換格式</a>';
+              echo '<a href="index.php?day='.$day.'&month='.$month.'&year='.$year.'&lang=en">切換格式</a>';
             }
             else{
-              echo '<a href="hw01.php?day='.$day.'&month='.$month.'&year='.$year.'&lang=tw">切換格式</a>';
+              echo '<a href="index.php?day='.$day.'&month='.$month.'&year='.$year.'&lang=tw">切換格式</a>';
             }
           ?>
         </div>
@@ -335,7 +347,7 @@
         <div class="rightBox">
           <div class="dateRight">
             <div>
-              <a href="hw01.php?day=<?=$day;?>&month=<?=$month;?>&year=<?=$yearPre;?>&lang=<?=$lang;?>" class="arrowL">◄</a> 
+              <a href="index.php?day=<?=$day;?>&month=<?=$month;?>&year=<?=$yearPre;?>&lang=<?=$lang;?>" class="arrowL">◄</a> 
               <span>
                 <?php
                   if($lang=="tw"){
@@ -346,11 +358,11 @@
                   }
                 ?>
               </span>
-              <a href="hw01.php?day=<?=$day;?>&month=<?=$month;?>&year=<?=$yearNext;?>&lang=<?=$lang;?>" class="arrowR">►</a>
+              <a href="index.php?day=<?=$day;?>&month=<?=$month;?>&year=<?=$yearNext;?>&lang=<?=$lang;?>" class="arrowR">►</a>
             </div>
             <!-- 切換月份 -->
             <div>
-              <a href="hw01.php?day=<?=$day;?>&month=<?=$monthPre;?>&year=<?=$mYearPre;?>&lang=<?=$lang;?>" class="arrowL">◄</a>
+              <a href="index.php?day=<?=$day;?>&month=<?=$monthPre;?>&year=<?=$mYearPre;?>&lang=<?=$lang;?>" class="arrowL">◄</a>
               <span>
                 <?php
                   if($lang=="tw"){
@@ -361,7 +373,7 @@
                   }
                 ?>
               </span>
-              <a href="hw01.php?day=<?=$day;?>&month=<?=$monthNext;?>&year=<?=$mYearNext;?>&lang=<?=$lang;?>" class="arrowR">►</a>
+              <a href="index.php?day=<?=$day;?>&month=<?=$monthNext;?>&year=<?=$mYearNext;?>&lang=<?=$lang;?>" class="arrowR">►</a>
             </div>
           </div>
           
@@ -419,15 +431,15 @@
                       // 當天日期
                       if($num==$dToday && $month==$mToday && $year==$yToday){
                         // echo "<span class='today'>".$num."</span>";
-                        echo '<a class="today" href="hw01.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
+                        echo '<a class="today" href="index.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
                       }
                       else if($num==$day){
                         // echo "<span class='selectDay'>".$num."</span>";
-                        echo '<a class="selectDay" href="hw01.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
+                        echo '<a class="selectDay" href="index.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
                       }
                       else{
                         // echo $num;
-                        echo '<a href="hw01.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
+                        echo '<a href="index.php?day='.$num.'&month='.$month.'&year='.$year.'&lang='.$lang.'">'.$num.'</a>';
                       }
                     }
                   }
