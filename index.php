@@ -213,7 +213,7 @@
         </div>
 
         <h3>搜尋條件</h3>
-        <form action="?">
+        <form action="?" onsubmit="return checkContorl(this)">
           <div>
             <select name="year" id="selectYear" onchange="changeMonth(this.value)">
               <!-- 顯示今年前後25年的年份 -->
@@ -255,6 +255,7 @@
           <div>
             <select name="day" id="selectDay">
               <?php
+                echo "<option value='0' select>請選擇</option>";
                 $monthDays=date("t",strtotime(date("$year-$month")));
                 for($i=1;$i<=$monthDays;$i++){
                   if($i==$day){
@@ -269,6 +270,7 @@
           </div>
           <!-- 讓lang也可藉由按鈕傳輸 -->
           <input type="hidden" name="lang" value="<?=$lang;?>">
+          <p class="tip">　</p>
 
           <input type="submit" value="確定">
           <input type="reset" value="重置">
@@ -480,6 +482,21 @@
         $(".controlPanel").animate({  
           left: "-250px"
         },300);
+      }
+    }
+
+
+    function checkContorl(chk){
+      let sY=$("#selectYear").val();
+      let sM=$("#selectMonth").val();
+      let sD=$("#selectDay").val();
+
+      if(sY==0 || sM==0 || sD==0){
+        document.querySelector(".tip").innerHTML="尚有選項未選擇!";
+        return false;
+      }else{
+        document.querySelector(".tip").innerHTML="　";
+        return true;
       }
     }
   </script>

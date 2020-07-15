@@ -14,6 +14,7 @@
   - 用click與animate取代hover控制面板的移出效果
   - 日期表格最上方的星期hover效果取消
   - CSS微調
+  - 修正控制面板未選擇所造成的bug
 
 
 
