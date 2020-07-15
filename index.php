@@ -8,15 +8,7 @@
   <link rel="stylesheet" href="css/style.css">
   
   <!-- 
-    【預計或考慮要修改的部分】
-    1.控制面版的日期，要依照選擇的月份立即更動
-    2.選擇日期時，標記要跟著動(目前只顯示在當天) ->OK
-    3.可點選行事曆上的日期切換左邊的時間 ->OK
-    4.選擇該月份沒有的日期 時間會出現bug(問題1修正應該可以排除)
-    5.加上節慶
-    6.RWD
-    7.背景美化
-    8.控制面版CSS修改，選擇select後不會縮回去
+    
    -->
   <?php
   // 變更時區
@@ -39,8 +31,9 @@
     $numWeek=date("w", strtotime(date("Y-m-d")));
     $week = func_week($numWeek);
 
-
     
+
+
     // 控制月份增減
     if(isset($_GET['month']) && isset($_GET['year'])){
       $month=$_GET['month'];
@@ -216,13 +209,13 @@
         
         <!-- 導引箭頭 -->
         <div class="controlBtnDiv">
-          <span class="controlBtn"></span>
+          <span class="controlBtn" onclick="controlToggle(this)"></span>
         </div>
 
         <h3>搜尋條件</h3>
         <form action="?">
           <div>
-            <select name="year" id="">
+            <select name="year" id="selectYear" onchange="changeMonth(this.value)">
               <!-- 顯示今年前後25年的年份 -->
               <?php
                 $y1=$yToday-25;
@@ -233,6 +226,7 @@
 
                 echo "<option value='0' select>請選擇</option>";
                 for($i=$y1;$i<=$y2;$i++){
+                  echo "<option value='$i'>$i</option>";
                   if($i==$year){
                     echo "<option value='$i' selected>$i</option>";
                   }
@@ -244,7 +238,7 @@
             </select>年
           </div>
           <div>
-            <select name="month" id="">
+            <select name="month" id="selectMonth" onchange="changeDay(this.value)">
               <?php
                 echo "<option value='0' select>請選擇</option>";
                 for($i=1;$i<=12;$i++){
@@ -259,11 +253,10 @@
             </select>月
           </div>
           <div>
-            <select name="day" id="">
-              <!-- 之後還要用js修改可以即時抓每月的天數(´・ω・`) -->
+            <select name="day" id="selectDay">
               <?php
-                echo "<option value='0' select>請選擇</option>";
-                for($i=1;$i<=31;$i++){
+                $monthDays=date("t",strtotime(date("$year-$month")));
+                for($i=1;$i<=$monthDays;$i++){
                   if($i==$day){
                     echo "<option value='$i' selected>$i</option>";
                   }
@@ -452,7 +445,43 @@
         </div>
       </div>
     </div>
-
   </div>
+
+
+  <script src="js/jquery-3.5.1.min.js"></script>
+  <script>
+    function changeMonth(val){
+      let selectY=document.querySelector("#selectYear").value;
+
+      $.get("api/get_month.php",{"s_year":selectY},function(months){
+        console.log(months);
+        document.querySelector("#selectMonth").innerHTML=months;
+        document.querySelector("#selectDay").innerHTML="";
+      })
+    }
+    function changeDay(val){
+      let selectY=document.querySelector("#selectYear").value;
+      $.get("api/get_day.php",{"s_year":selectY,"s_month":val},function(days){
+        // console.log(days);
+        document.querySelector("#selectDay").innerHTML=days;
+      })
+    }
+
+    function controlToggle(btn){
+      $(btn).toggleClass("open");
+      
+      if($(btn).hasClass("open")==true){
+        $(btn).css("transform"," rotate(-180deg)");
+        $(".controlPanel").animate({  
+          left: "-20px"
+        },300);
+      }else{
+        $(btn).css("transform"," rotate(0deg)");
+        $(".controlPanel").animate({  
+          left: "-250px"
+        },300);
+      }
+    }
+  </script>
 </body>
 </html>

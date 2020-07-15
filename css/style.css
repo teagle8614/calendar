@@ -11,13 +11,14 @@ body{
   z-index: 10;
   transition-duration: 1s;
 }
-.controlPanel:hover{
+/* .controlPanel:hover{
   left: -20px;
   transition-duration: 1.5s;
 }
 .controlPanel:hover .controlBtn{
   transform: rotate(-180deg);
-}
+} */
+
 .controlBox{
   position: relative;
   height: 100%;
@@ -126,8 +127,11 @@ body{
   border-radius: 20px;
   box-shadow: 10px 15px 10px #ccc;
   overflow: hidden;
+  transition-duration: 1s;
 }
-
+.calendar:hover{
+  box-shadow: 5px 10px 5px #ddd;
+}
 
 .calendarBox{
   display: flex;
@@ -234,6 +238,9 @@ body{
 .calendarTable tr td{
   width: 65px;
   height: 65px;
+}
+.calendarTable tr:first-child td:hover{
+  background-color: #fff;
 }
 .calendarTable tr td:first-child,
 .calendarTable tr td:last-child{
